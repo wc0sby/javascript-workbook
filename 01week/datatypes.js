@@ -1,5 +1,5 @@
 'use strict'
-/*
+/* 
 Write a JavaScript program to display the current day and time.
 Fuction called retunsCurrentDate with empty params and return current date using new Date method and concate
       getMonth()+
