@@ -1,5 +1,5 @@
 'use strict'
-/* 
+/*
 Write a JavaScript program to display the current day and time.
 Fuction called retunsCurrentDate with empty params and return current date using new Date method and concate
       getMonth()+
@@ -8,7 +8,7 @@ Fuction called retunsCurrentDate with empty params and return current date using
       getHours()+
       getMinutes()+
 */
-function returnCurrentDateAndTime () {
+function displayCurrentDateAndTime () {
   const now = new Date();
   const month = now.getMonth()+1;
   const day = now.getDate();
@@ -18,7 +18,7 @@ function returnCurrentDateAndTime () {
   const second = now.getSeconds();
   return month + "/" + day + "/" + year + " " + hour + ":" + minute + ":" + second
 }
-returnCurrentDateAndTime();
+displayCurrentDateAndTime();
 
 /*
 Write a JavaScript program to convert a number to a string.
