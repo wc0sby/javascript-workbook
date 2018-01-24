@@ -41,7 +41,8 @@ const isTheInputValid = (hand1, hand2) => {
   let hand1Lower = hand1.toLowerCase().trim();
   let hand2Lower = hand2.toLowerCase().trim();
   let choiceArray = ['rock','paper','scissors'];
-    if (choiceArray.includes(hand1Lower) === true && choiceArray.includes(hand2Lower) === true) {
+    if (choiceArray.includes(hand1Lower) === true &&
+        choiceArray.includes(hand2Lower) === true) {
       console.log( rockPaperScissors(hand1Lower, hand2Lower) );
     }else{
       console.log("Invalid Input: Acceptable responses: Rock, Paper, Scissors");
