@@ -38,9 +38,10 @@ const rl = readline.createInterface({
 */
 
 const isTheInputValid = (hand1, hand2) => {
-const hand1Lower = hand1.toLowerCase().trim();
-const hand2Lower = hand2.toLowerCase().trim();
-const choiceArray = ['rock','paper','scissors'];
+  const hand1Lower = hand1.toLowerCase().trim();
+  const hand2Lower = hand2.toLowerCase().trim();
+  const choiceArray = ['rock','paper','scissors'];
+
   if (choiceArray.includes(hand1Lower) === true &&
       choiceArray.includes(hand2Lower) === true) {
     console.log( rockPaperScissors(hand1Lower, hand2Lower) );
