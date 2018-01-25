@@ -38,27 +38,27 @@ const rl = readline.createInterface({
 */
 
 const isTheInputValid = (hand1, hand2) => {
-  let hand1Lower = hand1.toLowerCase().trim();
-  let hand2Lower = hand2.toLowerCase().trim();
-  let choiceArray = ['rock','paper','scissors'];
-    if (choiceArray.includes(hand1Lower) === true &&
-        choiceArray.includes(hand2Lower) === true) {
-      console.log( rockPaperScissors(hand1Lower, hand2Lower) );
-    }else{
-      console.log("Invalid Input: Acceptable responses: rock, paper, scissors");
-    }
+const hand1Lower = hand1.toLowerCase().trim();
+const hand2Lower = hand2.toLowerCase().trim();
+const choiceArray = ['rock','paper','scissors'];
+  if (choiceArray.includes(hand1Lower) === true &&
+      choiceArray.includes(hand2Lower) === true) {
+    console.log( rockPaperScissors(hand1Lower, hand2Lower) );
+  }else{
+    console.log("Invalid Input: Acceptable responses: rock, paper, scissors");
+  }
 }
 
 const rockPaperScissors = (convertedHand1, convertedHand2) => {
-    if (convertedHand1 === convertedHand2){
-      return "it's a tie"
-    }else if (convertedHand1 === "rock" && convertedHand2 === "scissors" ||
-        convertedHand1 === "scissors" && convertedHand2 === "paper" ||
-        convertedHand1 === "paper" && convertedHand2 ==="rock") {
-      return "User 1 wins"
-    }else{
-      return "User 2 wins"
-    }
+  if (convertedHand1 === convertedHand2){
+    return "it's a tie"
+  }else if (convertedHand1 === "rock" && convertedHand2 === "scissors" ||
+      convertedHand1 === "scissors" && convertedHand2 === "paper" ||
+      convertedHand1 === "paper" && convertedHand2 ==="rock") {
+    return "User 1 wins"
+  }else{
+    return "User 2 wins"
+  }
 }
 
 function getPrompt() {
