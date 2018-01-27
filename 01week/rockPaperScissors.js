@@ -42,8 +42,8 @@ const isTheInputValid = (hand1, hand2) => {
   const hand2Lower = hand2.toLowerCase().trim();
   const choiceArray = ['rock','paper','scissors'];
 
-  if (choiceArray.includes(hand1Lower) === true &&
-      choiceArray.includes(hand2Lower) === true) {
+  if (choiceArray.indexOf(hand1Lower) !== -1 &&
+      choiceArray.indexOf(hand2Lower) !== -1) {
     console.log( rockPaperScissors(hand1Lower, hand2Lower) );
   }else{
     console.log("Invalid Input: Acceptable responses: rock, paper, scissors");
@@ -52,13 +52,13 @@ const isTheInputValid = (hand1, hand2) => {
 
 const rockPaperScissors = (convertedHand1, convertedHand2) => {
   if (convertedHand1 === convertedHand2){
-    return "it's a tie"
+    return "It's a tie"
   }else if (convertedHand1 === "rock" && convertedHand2 === "scissors" ||
       convertedHand1 === "scissors" && convertedHand2 === "paper" ||
       convertedHand1 === "paper" && convertedHand2 ==="rock") {
-    return "User 1 wins"
+    return "Hand one wins!"
   }else{
-    return "User 2 wins"
+    return "Hand two wins!"
   }
 }
 
