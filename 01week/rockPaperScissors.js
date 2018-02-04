@@ -7,17 +7,65 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+// User1 input of rock, paper, or scissors.
+// User2 input of rock, paper, or scissors.
 
-function rockPaperScissors(hand1, hand2) {
+// Compare User1 input to User2 input.
+// If User1 input is 'rock' and User2 input is 'scissor', User1 wins.
+// If User1 input is 'rock' and User2 input is 'paper', User2 wins.
+// If User1 input is 'rock' and User2 input is 'rock', it's a tie.
+// If User1 input is 'paper' and User2 input is 'rock', User1 wins.
+// If User1 input is 'paper' and User2 input is 'scissors', User2 wins.
+// If User1 input is 'paper' and User2 input is 'paper', it's a tie.
+// If User1 input is 'scissors' and User2 input is 'paper', User1 wins.
+// If User1 input is 'scissors' and User2 input is 'rock', User2 wins.
+// If User1 input is 'scissors' and User2 input is 'scissors', it's a tie.
 
-  // Write code here
+/*
+  The getPrompt function handles the user prompts using redline.  Redline
+  question asks for response and return an answer (answer1 = user1 and
+  answer2 = user2). After the answer1 and answer2 is collected, we pass
+  these responses as params to isTheInputValid
 
+  Write the function [isTheInputValid] that takes the two answers from getPrompt
+  function which errorchecks the prompts from user to see if their values are either
+  Rock, Paper, or Scissors.  When true, pass the responses from getPromt
+  (converted to lowercase) to the rockPaperScissors Function as params hand1,
+  hand2, else return an error message.
+
+  Create an if statement called rockPaperScissors; test for tie first, then test
+  for user1 win scenarios, else user2 wins
+*/
+
+const isTheInputValid = (hand1, hand2) => {
+  const hand1Lower = hand1.toLowerCase().trim();
+  const hand2Lower = hand2.toLowerCase().trim();
+  const choiceArray = ['rock','paper','scissors'];
+
+  if (choiceArray.indexOf(hand1Lower) !== -1 &&
+      choiceArray.indexOf(hand2Lower) !== -1) {
+    console.log( rockPaperScissors(hand1Lower, hand2Lower) );
+  }else{
+    console.log("Invalid Input: Acceptable responses: rock, paper, scissors");
+  }
+}
+
+const rockPaperScissors = (convertedHand1, convertedHand2) => {
+  if (convertedHand1 === convertedHand2){
+    return "It's a tie"
+  }else if (convertedHand1 === "rock" && convertedHand2 === "scissors" ||
+      convertedHand1 === "scissors" && convertedHand2 === "paper" ||
+      convertedHand1 === "paper" && convertedHand2 ==="rock") {
+    return "Hand one wins!"
+  }else{
+    return "Hand two wins!"
+  }
 }
 
 function getPrompt() {
   rl.question('hand1: ', (answer1) => {
     rl.question('hand2: ', (answer2) => {
-      console.log( rockPaperScissors(answer1, answer2) );
+      isTheInputValid(answer1, answer2);
       getPrompt();
     });
   });
