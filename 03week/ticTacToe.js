@@ -6,6 +6,7 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+
 let board = [
   [' ', ' ', ' '],
   [' ', ' ', ' '],
@@ -40,7 +41,8 @@ function checkForWin() {
 }
 
 function ticTacToe(row, column) {
-  // Your code here
+  board[row].splice(column,column,playerTurn)
+  playerTurn === 'X' ? playerTurn = 'O' : playerTurn = 'X'
 }
 
 function getPrompt() {
