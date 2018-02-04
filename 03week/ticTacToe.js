@@ -24,12 +24,19 @@ function printBoard() {
   console.log('2 ' + board[2].join(' | '));
 }
 
-function horizontalWin() {
-  // Your code here
+
+const horizontalWin = () => {
+  return (board[0].every(gameMarker) || 
+    board[1].every(gameMarker) || 
+    board[2].every(gameMarker))
 }
 
-function verticalWin() {
-  // Your code here
+const verticalWin = () => {
+  board.forEach((item)=>{
+   const verticalResult = board[board.indexOf(item)][0] === playerTurn
+   console.log(verticalResult)
+})
+return  verticalResult
 }
 
 function diagonalWin() {
@@ -40,8 +47,8 @@ function checkForWin() {
   // Your code here
 }
 
-function ticTacToe(row, column) {
-  board[row].splice(column,column,playerTurn)
+const ticTacToe = (row, column) => {
+  board[row].splice(column,column + 1,playerTurn)
   playerTurn === 'X' ? playerTurn = 'O' : playerTurn = 'X'
 }
 
