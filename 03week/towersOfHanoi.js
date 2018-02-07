@@ -7,35 +7,34 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-let stacks = {
+const stacks = {
   a: [4, 3, 2, 1],
   b: [],
   c: []
 };
 
-function printStacks() {
+const printStacks = () => {
   console.log("a: " + stacks.a);
   console.log("b: " + stacks.b);
   console.log("c: " + stacks.c);
 }
 
-function movePiece() {
+const movePiece = () => {
   // Your code here
 
 }
 
-function isLegal() {
+const isLegal = () => {
   // Your code here
 
 }
 
-function checkForWin() {
+const checkForWin = () => {
   // Your code here
-  console.log('im here')
 
 }
 
-function towersOfHanoi(startStack, endStack) {
+const towersOfHanoi = (startStack, endStack) => {
   // Your code here
 
 }
