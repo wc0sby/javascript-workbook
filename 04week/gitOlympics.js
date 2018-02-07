@@ -1,10 +1,9 @@
 'use strict'
 
-const olympianNames = ['wade','john','sunsha', 'renee', 'eric']
-
-const  printListOfOlympians = (userArray){
-    userArray.forEach(item)
-
+const  printListOfOlympians = (userArray)=> {
+    userArray.forEach((vowelMatch) => {
+        console.log(item)
+    })     
 }
 
-const 
+printListOfOlympians(['wade','john','sunsha', 'renee', 'eric'])
