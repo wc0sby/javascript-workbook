@@ -1,7 +1,7 @@
 'use strict'
 
 const  printListOfOlympians = (userArray)=> {
-    userArray.forEach((vowelMatch) => {
+    userArray.forEach((item) => {
         console.log(item)
     })     
 }
