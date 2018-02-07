@@ -7,6 +7,8 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+const validStackInputs = ['a','b','c'];
+
 const stacks = {
   a: [4, 3, 2, 1],
   b: [],
@@ -31,13 +33,25 @@ const isLegal = () => {
 
 const checkForWin = () => {
   // Your code here
+}
 
+/*
+This helper function takes in an array and the passed input from the user to obtain
+truthiness.  This is utilized by the towersOfHanoi function.
+*/
+const inputLetterTest = (inputArr, inputStack) => {
+  return inputArr.some((stack) => {
+    return stack === inputStack
+  })
 }
 
 const towersOfHanoi = (startStack, endStack) => {
-  // Your code here
+  (inputLetterTest(validStackInputs, startStack) && 
+    inputLetterTest(validStackInputs, endStack)) 
+   ? checkForWin()
+   : console.log("Input is invalid")
+ }
 
-}
 
 function getPrompt() {
   printStacks();
@@ -49,6 +63,24 @@ function getPrompt() {
   });
 }
 
-getPrompt();
+if (typeof describe === 'function') {
 
+  describe('#towersOfHanoi()', () => {
+    it('should only allow input of a, b, or c', () => {
+      ticTacToe(a, e);
+      assert.deepEqual(board, false);
+    });
+    it('should only stack in decsending order', () => {
+      ticTacToe(0, 0);
+      assert.deepEqual(board, [ ['O', ' ', ' '], [' ', 'X', ' '], [' ', ' ', ' '] ]);
+    });
+    it('should return a win when the stack is fully moved to stack c', () => {
+      board = [ [' ', 'X', ' '], [' ', 'X', ' '], [' ', 'X', ' '] ];
+      assert.equal(verticalWin(), true);
+    });
+  });
+} else {
+
+  getPrompt();
+}
 
