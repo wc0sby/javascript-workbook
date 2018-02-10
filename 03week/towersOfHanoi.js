@@ -33,6 +33,10 @@ isLegal accepts inputs from towersOfHanoi and should validate that the array is 
   else, report the illegal move to the user
 
 movePiece accepts the inputs from isLegal, pops the last value of the startStack to the lastValueOfStartStack and pushes the popped value to the end of the endStack
+ends by checking for a win by passing the inputs to the Check for Win function
+
+checkForWin function will check stack c to see if there is a win by testing if the length of the stack is === 4.  The arrangement is handled by other functions, therefore
+additional validation on this function is not necessary
 
 */
 
@@ -61,19 +65,22 @@ const printStacks = () => {
 
 const movePiece = (startStack, endStack) => {
   const lastRing = stacks[startStack].pop()
- return stacks[endStack].push(lastRing)
+  stacks[endStack].push(lastRing)
+  checkForWin(startStack, endStack) ? console.log('You win!!!') : ''
 }
 
 const isLegal = (startStack, endStack) => {
-  return stacks[endStack][endStack.length] === undefined  || stacks[startStack][stacks[startStack].length-1] < stacks[endStack][stacks[endStack].length-1]
-  ? movePiece(startStack, endStack)
-  : console.log('nope')
+  const startStackValue = stacks[startStack][stacks[startStack].length-1]
+  const endStackValue = stacks[endStack][stacks[endStack].length-1]
+  return stacks[endStack].length === 0 || startStackValue < endStackValue
+    ? movePiece(startStack, endStack)
+    : console.log(`The move is illegal.
+    Stack ${startStack}'s value of ${startStackValue}, which is greater than
+    Stack ${endStack}'s value of ${endStackValue}.  Please try again`)
 }
 
 const checkForWin = (startStack, endStack) => {
- return stacks.c.length !== 4 
-  ? isLegal(startStack, endStack)
-  : console.log ("you win!")
+ return stacks.c.length === 4 
 }
 
 /*
@@ -87,10 +94,10 @@ const inputLetterTest = (inputArr, inputStack) => {
 }
 
 const towersOfHanoi = (startStack, endStack) => {
- return (inputLetterTest(validStackInputs, startStack) && 
-        inputLetterTest(validStackInputs, endStack)) 
-   ? checkForWin(startStack, endStack)
-   : console.log("Input is invalid")
+  (inputLetterTest(validStackInputs, startStack) && 
+   inputLetterTest(validStackInputs, endStack)) 
+  ? isLegal(startStack, endStack)
+  : console.log("Input is invalid")
  }
 
 function getPrompt() {
