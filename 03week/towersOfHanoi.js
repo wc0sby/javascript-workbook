@@ -9,6 +9,7 @@ GAME RULES:
 1. Move only one number at a time.
 2. A larger number may not be placed ontop of a smaller number.
 3. All numbers, except the one being moved, must be on a peg.
+4. A win is determined when stack c is stacked smallest to largest 
 
 Things the game does:
 1. User inputs a beginning stack (from) and ending stack (destination)
@@ -26,17 +27,20 @@ Variables:
 - lastValueOfStartStack - holds the last value of the starting stack array
 
 Functions:
-towersOfHanoi accepts a startStack and endStack from the user.  If the input matches the valid inputs, then test if the inputs are legal
+towersOfHanoi accepts a startStack and endStack from the user.  If the input matches the valid inputs, then begin to move the piece 
 
-isLegal accepts inputs from towersOfHanoi and should validate that the array is either empty or the last value of the endingStack is greater than the startStack
-  if true, then allow the move (pass the start and end to movePiece)
-  else, report the illegal move to the user
+movePiece accepts the inputs from towersOfHanoi, tests if the move is legal.  If legal, pops the last value of the startStack to the lastValueOfStartStack 
+and pushes the popped value to the end of the endStack and checks for a win by passing the inputs to the Check for Win function.
+  If not legal, then return an error message.
 
-movePiece accepts the inputs from isLegal, pops the last value of the startStack to the lastValueOfStartStack and pushes the popped value to the end of the endStack
-ends by checking for a win by passing the inputs to the Check for Win function
+isLegal accepts inputs from movePiece and should validate that the array of the passed start and end stack is either empty
 
 checkForWin function will check stack c to see if there is a win by testing if the length of the stack is === 4.  The arrangement is handled by other functions, therefore
 additional validation on this function is not necessary
+    Returns Boolean by testing the length of the the array on stack c
+
+resetBoard is ran once a win is reported and will ask the user if they want to play again.  Based on a user input of
+Y or N, the game will either reset the board and loop into getPrompt [Y], or exit the game using process.exit (a node method)
 
 */
 
@@ -51,10 +55,10 @@ const rl = readline.createInterface({
 
 const validStackInputs = ['a','b','c'];
 
-const stacks = {
-  a: [4, 3, 2, 1],
+let stacks = {
+  a: [1],
   b: [],
-  c: []
+  c: [4, 3, 2]
 };
 
 const printStacks = () => {
@@ -64,19 +68,20 @@ const printStacks = () => {
 }
 
 const movePiece = (startStack, endStack) => {
-  const lastRing = stacks[startStack].pop()
-  stacks[endStack].push(lastRing)
-  checkForWin(startStack, endStack) ? console.log('You win!!!') : ''
-}
-
-const isLegal = (startStack, endStack) => {
   const startStackValue = stacks[startStack][stacks[startStack].length-1]
   const endStackValue = stacks[endStack][stacks[endStack].length-1]
+  if (isLegal(startStackValue, endStackValue, endStack)){
+    const lastRing = stacks[startStack].pop()
+    stacks[endStack].push(lastRing)
+  }else{
+    return `The move is illegal.
+    Stack ${startStack}'s value of ${startStackValue} is greater than
+    Stack ${endStack}'s value of ${endStackValue}.  Please try again`
+  }
+}
+
+const isLegal = (startStackValue, endStackValue, endStack) => {
   return stacks[endStack].length === 0 || startStackValue < endStackValue
-    ? movePiece(startStack, endStack)
-    : console.log(`The move is illegal.
-    Stack ${startStack}'s value of ${startStackValue}, which is greater than
-    Stack ${endStack}'s value of ${endStackValue}.  Please try again`)
 }
 
 const checkForWin = (startStack, endStack) => {
@@ -94,18 +99,35 @@ const inputLetterTest = (inputArr, inputStack) => {
 }
 
 const towersOfHanoi = (startStack, endStack) => {
-  (inputLetterTest(validStackInputs, startStack) && 
+  return (inputLetterTest(validStackInputs, startStack) && 
    inputLetterTest(validStackInputs, endStack)) 
-  ? isLegal(startStack, endStack)
-  : console.log("Input is invalid")
+  ? (movePiece(startStack, endStack), checkForWin(startStack, endStack) ? 'You win!!!' : '')
+  : "Input is invalid"
  }
 
-function getPrompt() {
+ const resetBoard = (response) =>{
+   response.trim().toUpperCase() === 'Y' 
+    ? (stacks = {
+    a: [4, 3, 2, 1],
+    b: [],
+    c: []
+    }, getPrompt())
+   : process.exit()
+  }
+
+ const getWinnerResponsePrompt = () => {
+  rl.question('Would like to play again [Y][N]: ', (response) => {
+    resetBoard(response);
+    getWinnerResponsePrompt();
+  });
+}
+
+const getPrompt = () => {
   printStacks();
   rl.question('start stack: ', (startStack) => {
     rl.question('end stack: ', (endStack) => {
-      towersOfHanoi(startStack, endStack);
-      getPrompt();
+      console.log(towersOfHanoi(startStack, endStack));
+      towersOfHanoi(startStack, endStack)==="You win!!!" ? getWinnerResponsePrompt() : getPrompt();
     });
   });
 }
@@ -113,17 +135,18 @@ function getPrompt() {
 if (typeof describe === 'function') {
 
   describe('#towersOfHanoi()', () => {
-    it('should only allow input of a, b, or c', () => {
-      ticTacToe(a, e);
-      assert.deepEqual(board, false);
+    it('should return Input is invalid to the user if any letter other than a, b, c is passed into the function', () => {
+      assert.equal(towersOfHanoi('a', 'd'), 'Input is invalid');
+      assert.equal(towersOfHanoi('d', 'e'), 'Input is invalid');
     });
-    it('should only stack in decsending order', () => {
-      ticTacToe(0, 0);
-      assert.deepEqual(board, [ ['O', ' ', ' '], [' ', 'X', ' '], [' ', ' ', ' '] ]);
+    it('should only allow stacking in decsending order', () => {
+      stacks = { a: [1], b: [], c: [4, 3, 2] }
+      assert.equal(isLegal(2,1,'a'), false);
+      assert.equal(isLegal(2,[],'b'), true);
     });
     it('should return a win when the stack is fully moved to stack c', () => {
-      board = [ [' ', 'X', ' '], [' ', 'X', ' '], [' ', 'X', ' '] ];
-      assert.equal(verticalWin(), true);
+      stacks = { a: [1], b: [], c: [4, 3, 2] };
+      assert.equal(towersOfHanoi('a','c'), 'You win!!!');
     });
   });
 } else {
