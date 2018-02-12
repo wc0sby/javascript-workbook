@@ -44,8 +44,6 @@ Y or N, the game will either reset the board and loop into getPrompt [Y], or exi
 
 */
 
-
-
 const assert = require('assert');
 const readline = require('readline');
 const rl = readline.createInterface({
@@ -56,9 +54,9 @@ const rl = readline.createInterface({
 const validStackInputs = ['a','b','c'];
 
 let stacks = {
-  a: [1],
+  a: [4, 3, 2, 1],
   b: [],
-  c: [4, 3, 2]
+  c: []
 };
 
 const printStacks = () => {
@@ -67,58 +65,66 @@ const printStacks = () => {
   console.log("c: " + stacks.c);
 }
 
+let gameCounter = 1;
 const movePiece = (startStack, endStack) => {
-  const startStackValue = stacks[startStack][stacks[startStack].length-1]
-  const endStackValue = stacks[endStack][stacks[endStack].length-1]
-  if (isLegal(startStackValue, endStackValue, endStack)){
-    const lastRing = stacks[startStack].pop()
-    stacks[endStack].push(lastRing)
-  }else{
-    return `The move is illegal.
-    Stack ${startStack}'s value of ${startStackValue} is greater than
-    Stack ${endStack}'s value of ${endStackValue}.  Please try again`
-  }
+const lastRing = stacks[startStack].pop()
+  stacks[endStack].push(lastRing)
+  return `You've made ${gameCounter ++} move(s)`
 }
 
 const isLegal = (startStackValue, endStackValue, endStack) => {
   return stacks[endStack].length === 0 || startStackValue < endStackValue
 }
 
-const checkForWin = (startStack, endStack) => {
- return stacks.c.length === 4 
+const checkForWin = () => {
+  return stacks.c.length === 4 
 }
 
 /*
 This helper function takes in an array and the passed input from the user to obtain
 truthiness.  This is utilized by the towersOfHanoi function.
 */
-const inputLetterTest = (inputArr, inputStack) => {
-  return inputArr.some((stack) => {
-    return stack === inputStack
-  })
+const inputLetterTest = (startStack, endStack) => {
+   return validStackInputs.indexOf(startStack) !== - 1 && validStackInputs.indexOf(endStack) !== -1
 }
 
+/*
+The towersOfHanoi function accepts the inputs from getPrompt to play the game. This function passes
+the params up the chain to test if the inputs are a,b, or c, calls the movePiece function to 
+handle the move, and finally checks for a win after the move has been processed.  Returns
+either a move with or without a returned win, or an error message to the user in the event 
+the user types any other value than a, b, or c
+*/
 const towersOfHanoi = (startStack, endStack) => {
-  return (inputLetterTest(validStackInputs, startStack) && 
-   inputLetterTest(validStackInputs, endStack)) 
-  ? (movePiece(startStack, endStack), checkForWin(startStack, endStack) ? 'You win!!!' : '')
-  : "Input is invalid"
- }
+  if (inputLetterTest (startStack, endStack)) {
+    let gameCounter = 0
+    const startStackValue = stacks[startStack][stacks[startStack].length-1];
+    const endStackValue = stacks[endStack][stacks[endStack].length-1];
+    if (isLegal(startStackValue, endStackValue, endStack)){
+      return movePiece(startStack, endStack)
+    }else{
+      return `The move is illegal.
+      Stack ${startStack}'s value of ${startStackValue} is greater than
+      Stack ${endStack}'s value of ${endStackValue}.  Please try again.`
+    }
+  }else{
+    return 'Input is invalid'
+  }
+}
 
- const resetBoard = (response) =>{
-   response.trim().toUpperCase() === 'Y' 
-    ? (stacks = {
+const resetBoard = (response) =>{
+  response.trim().toUpperCase() === 'Y' 
+  ? (stacks = {
     a: [4, 3, 2, 1],
     b: [],
     c: []
-    }, getPrompt())
-   : process.exit()
-  }
+  }, getPrompt())
+  : process.exit()
+}
 
- const getWinnerResponsePrompt = () => {
-  rl.question('Would like to play again [Y][N]: ', (response) => {
+const getWinnerResponsePrompt = () => {
+  rl.question('WINNER!!! Play again? [Y][N]: ', (response) => {
     resetBoard(response);
-    getWinnerResponsePrompt();
   });
 }
 
@@ -127,7 +133,7 @@ const getPrompt = () => {
   rl.question('start stack: ', (startStack) => {
     rl.question('end stack: ', (endStack) => {
       console.log(towersOfHanoi(startStack, endStack));
-      towersOfHanoi(startStack, endStack)==="You win!!!" ? getWinnerResponsePrompt() : getPrompt();
+      checkForWin() ? getWinnerResponsePrompt() : getPrompt();
     });
   });
 }
@@ -153,4 +159,6 @@ if (typeof describe === 'function') {
 
   getPrompt();
 }
+ 
+
 
