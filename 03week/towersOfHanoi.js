@@ -51,7 +51,10 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+//Global array so that this is stored to the app once and not compiled everytime the function is called.
 const validStackInputs = ['a','b','c'];
+//Global variable to handle game counter.  Used let here so that the variable can be updated.
+let gameCounter = 1;
 
 let stacks = {
   a: [4, 3, 2, 1],
@@ -65,17 +68,31 @@ const printStacks = () => {
   console.log("c: " + stacks.c);
 }
 
-let gameCounter = 1;
+/*
+Function to move the piece.  Uses the push and pop methods to move the startStack last item to 
+the end of the endStack column.  When called, calls the gameCounter and adds one.  Returns the 
+game move count to the user.
+*/
 const movePiece = (startStack, endStack) => {
-const lastRing = stacks[startStack].pop()
-  stacks[endStack].push(lastRing)
+const lastValueOfStartColumn = stacks[startStack].pop()
+  stacks[endStack].push(lastValueOfStartColumn)
   return `You've made ${gameCounter ++} move(s)`
 }
 
+/*
+Function to test if the input stacks are valid.  The destination(endstack) must be empty, or 
+the startStackValue must be less than the destination endStackValue. Return boolean uses method
+length to get the content count of the object and then compares the passed startStackValue and 
+endStackValue 
+*/
 const isLegal = (startStackValue, endStackValue, endStack) => {
   return stacks[endStack].length === 0 || startStackValue < endStackValue
 }
 
+/*
+Function to test if there is a win by testing the length of the final stack (stack c). No additional
+validation is needed here since the legality is tested in other functions.
+*/
 const checkForWin = () => {
   return stacks.c.length === 4 
 }
@@ -90,28 +107,30 @@ const inputLetterTest = (startStack, endStack) => {
 
 /*
 The towersOfHanoi function accepts the inputs from getPrompt to play the game. This function passes
-the params up the chain to test if the inputs are a,b, or c, calls the movePiece function to 
-handle the move, and finally checks for a win after the move has been processed.  Returns
-either a move with or without a returned win, or an error message to the user in the event 
+the params up the chain to test if the inputs are a,b, or c, and if isLegal then calls the movePiece 
+function to handle the move; else not isLega will return an error, or an error message to the user in the event 
 the user types any other value than a, b, or c
 */
 const towersOfHanoi = (startStack, endStack) => {
   if (inputLetterTest (startStack, endStack)) {
-    let gameCounter = 0
     const startStackValue = stacks[startStack][stacks[startStack].length-1];
     const endStackValue = stacks[endStack][stacks[endStack].length-1];
     if (isLegal(startStackValue, endStackValue, endStack)){
       return movePiece(startStack, endStack)
     }else{
-      return `The move is illegal.
-      Stack ${startStack}'s value of ${startStackValue} is greater than
-      Stack ${endStack}'s value of ${endStackValue}.  Please try again.`
+      return `The move is illegal. Stack ${startStack} cannot be greater than Stack ${endStack}'s value.  Please try again.`
     }
   }else{
     return 'Input is invalid'
   }
 }
 
+/*
+Function to reset the game after a win is reported.  The getWinnerResponsePrompt calls this function
+if the user types a Y into the console.  Else, exit the game.  The function will take the response
+from the user (getWinnerResponsePrompt) and when Y, the stacks are reset and getPrompt function is called
+else process.exit is used to exit the console.
+*/
 const resetBoard = (response) =>{
   response.trim().toUpperCase() === 'Y' 
   ? (stacks = {
@@ -122,12 +141,21 @@ const resetBoard = (response) =>{
   : process.exit()
 }
 
+/*
+Function to handle when a win is reported.  Purpose of this function is when called, take in the user's 
+response of Y or N and pass to the resetBoard function to handle the next step in the game.
+*/
 const getWinnerResponsePrompt = () => {
   rl.question('WINNER!!! Play again? [Y][N]: ', (response) => {
     resetBoard(response);
   });
 }
 
+/*
+Function to prompt the user for input of start and end stack.  Each time the user inputs the prompt
+values, checkForWin() function is tested for truthiness.  While falsy, run getPrompt fuction,
+else run the getWinnerResponsePromt to handle next steps.
+*/
 const getPrompt = () => {
   printStacks();
   rl.question('start stack: ', (startStack) => {
@@ -151,8 +179,10 @@ if (typeof describe === 'function') {
       assert.equal(isLegal(2,[],'b'), true);
     });
     it('should return a win when the stack is fully moved to stack c', () => {
+      stacks = { a: [], b: [], c: [4, 3, 2, 1] };
+      assert.equal(checkForWin(), true);
       stacks = { a: [1], b: [], c: [4, 3, 2] };
-      assert.equal(towersOfHanoi('a','c'), 'You win!!!');
+      assert.equal(checkForWin(), false);
     });
   });
 } else {
