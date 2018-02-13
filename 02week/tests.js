@@ -91,6 +91,9 @@ if (typeof describe === 'function') {
       assert.equal(rockPaperScissors('rock', 'paper'), "Hand two wins!");
       assert.equal(rockPaperScissors('paper', 'scissors'), "Hand two wins!");
       assert.equal(rockPaperScissors('rock', 'scissors'), "Hand one wins!");
+      assert.equal(rockPaperScissors('paper', 'rock'), "Hand one wins!");
+      assert.equal(rockPaperScissors('scissors', 'paper'), "Hand one wins!");
+      assert.equal(rockPaperScissors('scissors', 'rock'), "Hand two wins!");      
     });
     it('should scrub input to ensure lowercase with "trim"ed whitepace', () => {
       assert.equal(rockPaperScissors('rOcK', ' paper '), "Hand two wins!");
@@ -106,10 +109,9 @@ if (typeof describe === 'function') {
 
 if (typeof describe === 'function') {
 
-  describe('#isTheInputValid()', () => {
+  describe('#isTheInputValid', () => {
     it('should only allow input of rock, paper, scissors', () => {
-      assert.equal(isTheInputValid('rock','paper'), true);
-      assert.equal(isTheInputValid('scissor', 'paper'), false);
+      assert.equal(rockPaperScissors('scissor', 'paper'), "Invalid Input: Acceptable responses: rock, paper, scissors");
     });
   });
 } else {
