@@ -64,12 +64,10 @@ const printNumbersOneToOneThousand = () => {
 
 // printNumbersOneToOneThousand();
 
-
 /*
 do...while loop
     Use a do...while loop to console.log the numbers from 1 to 1000.
 */
-
 const printTheNumbersUsingDoWhile = () => {
     let x = 1
     do {
@@ -78,11 +76,30 @@ const printTheNumbersUsingDoWhile = () => {
     } while (x < 1001);
 }
 
-printTheNumbersUsingDoWhile();
+// printTheNumbersUsingDoWhile();
 
 /*
-When is a for loop better than a while loop?
-How is the readability of the code affected?
-What is the difference between a for loop and a for...in loop?
-What is the difference between a while loop and a do...while loop?
+1. When is a for loop better than a while loop?
+    For loops are preferred when the number of iterations of the action is known.
+    The while loop is preferred when there isn't a known count of iterations, but can 
+    utilize other conditionals to loop i.e. 
+*/
+
+/*
+2. How is the readability of the code affected?
+    The syntax is different between the two.  For loop stores a variable to scope, has
+    a iteration condition (i < x) and an increaser (i++).  The While syntax looks
+    for While (condition) {code block}.  
+*/
+
+/*
+3. What is the difference between a for loop and a for...in loop?
+    For loop cycles through a code block for a specific condition returns false
+    For in loop cycles through the properties of an object
+*/
+
+/*
+4. What is the difference between a while loop and a do...while loop?
+    The while loop will execute the code block while the condition is true
+    The do...while loop will execute the code block until the condition is false.
 */
