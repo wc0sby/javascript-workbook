@@ -54,12 +54,31 @@ while loop
     Use a for loop to console.log the numbers 1 to 1000.
 */
 
+const printNumbersOneToOneThousand = () => {
+    let x = 1
+    while ( x < 1001 ) {
+        console.log(x);
+        x++;        
+    }
+}
+
+// printNumbersOneToOneThousand();
 
 
 /*
 do...while loop
     Use a do...while loop to console.log the numbers from 1 to 1000.
 */
+
+const printTheNumbersUsingDoWhile = () => {
+    let x = 1
+    do {
+        console.log(x);
+        x++
+    } while (x < 1001);
+}
+
+printTheNumbersUsingDoWhile();
 
 /*
 When is a for loop better than a while loop?
