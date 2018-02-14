@@ -74,6 +74,6 @@ const mulitplierForExchangeRate = (obj) =>{
     }
 )}
 
-mulitplierForExchangeRate(latestExchangeRate)
+mulitplierForExchangeRate(latestExchangeRate);
 
 
