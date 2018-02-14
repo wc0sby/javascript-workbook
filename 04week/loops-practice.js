@@ -46,33 +46,34 @@ const latestExchangeRate = {
 }
 
 //create a function that returns the base and date for and object. Use latestExchangeRate as an example to test your function
-const getBaseAndDate = () =>{
-    console.log (`Base:${latestExchangeRate.base} Date: ${latestExchangeRate.date}`)
+const getBaseAndDate = (obj) =>{
+    console.log (`Base:${obj.base} Date: ${obj.date}`)
 }
-//getBaseAndDate();
+//getBaseAndDate(latestExchangeRate);
 //create a function that returns a list of availble currencies from a given object. Use latestExchangeRate as an example to test your function
-const getListOfCurrencies = () => {
-    console.log(latestExchangeRate.rates)
+const getListOfCurrencies = (obj) => {
+    console.log(Object.keys(obj.rates))
 }
-getListOfCurrencies()
+// getListOfCurrencies(latestExchangeRate)
 // create a function that console logs a string with the currency and the currency rate for each currency in a given object. For example, 'AUD is at a 1.2742 conversion rate'. Use latestExchangeRate as an example to test your function
-const stringCurrencyAndRate = () => {
+const stringCurrencyAndRate = (obj) => {
     // console.log(latestExchangeRate['rates'])
-   Object.entries(latestExchangeRate['rates']).forEach(([key,value]) => {
+   Object.entries(obj['rates']).forEach(([key,value]) => {
        console.log(`${key} is at a ${value} conversion rate.`) 
     })
 
 }
-// stringCurrencyAndRate();
+// stringCurrencyAndRate(latestExchangeRate);
 
 
 //create a function that takes in an object and console logs the result of the object's multiplyByTen method on each of the exchange rates. Use latestExchangeRate as an example to test your function
-const mulitplierForExchangeRate = (baseCurrencyNum) =>{
-    Object.entries(latestExchangeRate['rates']).forEach(([key,value]) => {
-        console.log(`Using exchange rate of ${key} the converted value is  ${value * baseCurrencyNum}.`) 
-     })
-}
+const mulitplierForExchangeRate = (obj) =>{
+    
+    Object.values(obj['rates']).forEach((value) => {
+        console.log(obj.multiplyByTen(value))
+    }
+)}
 
-// mulitplierForExchangeRate(100)
+mulitplierForExchangeRate(latestExchangeRate)
 
 
