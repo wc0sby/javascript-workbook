@@ -42,12 +42,12 @@ const printEachObjectKey = (objArr) => {
 }
 // printEachObjectKey(persons);
 
-const printOutTheKeyValues = (objArr) => {
+const printOutTheKeyValues = (objArr, objName) => {
     for (const key in objArr) {
-        key === 'birthDate' ? console.log(objArr[key]) : '';
+        key === objName ? console.log(objArr[key]) : '';
     }
 }
-// printOutTheKeyValues(persons)
+printOutTheKeyValues(persons, 'birthDate')
 
 /*
 while loop
@@ -95,7 +95,7 @@ const printTheNumbersUsingDoWhile = () => {
 /*
 3. What is the difference between a for loop and a for...in loop?
     For loop cycles through a code block for a specific condition returns false
-    For in loop cycles through the properties of an object
+    For...in loop cycles through the properties of an object
 */
 
 /*
