@@ -40,13 +40,21 @@ const printEachObjectKey = (objArr) => {
         console.log (key)
     }
 }
+// printEachObjectKey(persons);
 
-printEachObjectKey(persons);
+const printOutTheKeyValues = (objArr) => {
+    for (const key in objArr) {
+        key === 'birthDate' ? console.log(objArr[key]) : '';
+    }
+}
+// printOutTheKeyValues(persons)
 
 /*
 while loop
     Use a for loop to console.log the numbers 1 to 1000.
 */
+
+
 
 /*
 do...while loop
