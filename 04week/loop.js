@@ -40,7 +40,7 @@ const printEachObjectKey = (objArr) => {
         console.log (key)
     }
 }
-// printEachObjectKey(persons);
+printEachObjectKey(persons);
 
 const printOutTheKeyValues = (objArr, objName) => {
     for (const key in objArr) {
