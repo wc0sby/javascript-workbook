@@ -1,5 +1,46 @@
 'use strict';
 
+/*
+--WHITEBOARD--
+
+PROJECT: Build the Space To Mars app using the provided tests.
+-Test 1: It should have a name, a job, a specialSkill and ship upon instantiation
+  -Creates a new object called crewMember1
+  -What's required:
+    1. Create a class called CrewMember
+    2. Contruct the class to accept the following:
+      a. name
+      b. job
+      c. speckialSkill
+      d. ship  = this will be null 
+
+-Test 2: It can enter a ship
+  -This will test if the crew member job type is applicable to the ship.
+    T. assign the ship for the crew member, and insert the crew member into the crew for the ship
+    F. -
+
+  -What's required:
+    1. create a method on the crewmember class called enterShip
+      a. the enterShip method will accept an object [ship]
+        - find out if  'this' relates to the object.  if so, then begin pulling methods, else use the obj name
+      b. Ternary to determine truthiness of the crewmember job title against jobTypes object
+        -assign the ship for the crew member, and insert the crew member into the crew for the ship when true
+
+-Test 3: It should have a name, a type, an ability and an empty crew upon instantiation
+  -Creates a new object called mav
+  -What's required:
+    1. Create a class called Ship
+    2. Construct the class to accept the following:
+      a. name
+      b. type
+      c. ability
+      d. crew -> this will be an empty array
+
+-Test 4: It can return a mission statement correctly
+  -
+
+*/
+
 let assert = require('assert');
 
 let jobTypes = {
