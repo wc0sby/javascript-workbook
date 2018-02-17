@@ -39,10 +39,15 @@ PROJECT: Build the Space To Mars app using the provided tests.
 -Test 4: It can return a mission statement correctly
   -This will test the crew array to check if there is a crew
   -What's required:
-    1. Method on the ship class
+    1. Method on the ship class called missionStatement
       -Test if crew is > 0 
         T: Ability
         F: Can't perform a mission yet
+
+PLAN:
+  1. Create the classes required to make this work
+  2. Build the method enterShip with the ability to accept an object
+  3. Build the method missionStatement
 
 */
 
@@ -55,9 +60,36 @@ let jobTypes = {
   programmer: 'Any Ship!'
 };
 
-// Your code here
+/*
+Step 1: Build the classes for the app
+*/
 
-//tests
+class CrewMember {
+  constructor(name, job, specialSkill){
+    this.name = name;
+    this.job = job;
+    this.specialSkill = specialSkill;
+    this.ship = null;
+    this.enterShip = (ship) =>{
+      this.ship = ship
+      ship.crew.push(this)
+    }
+  }
+}
+
+class Ship {
+  constructor(name, type, ability){
+    this.name = name;
+    this.type = type;
+    this.ability = ability;
+    this.crew = [];
+    this.missionStatement = () =>{
+      return this.crew.length === 0 ? `Can't perform a mission yet.` : this.ability
+    }
+  }
+}
+
+
 if (typeof describe === 'function'){
   describe('CrewMember', function(){
     it('should have a name, a job, a specialSkill and ship upon instantiation', function(){
