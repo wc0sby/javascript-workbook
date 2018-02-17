@@ -37,7 +37,12 @@ PROJECT: Build the Space To Mars app using the provided tests.
       d. crew -> this will be an empty array
 
 -Test 4: It can return a mission statement correctly
-  -
+  -This will test the crew array to check if there is a crew
+  -What's required:
+    1. Method on the ship class
+      -Test if crew is > 0 
+        T: Ability
+        F: Can't perform a mission yet
 
 */
 
