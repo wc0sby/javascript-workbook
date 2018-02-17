@@ -46,8 +46,8 @@ PROJECT: Build the Space To Mars app using the provided tests.
 
 PLAN:
   1. Create the classes required to make this work
-  2. Build the method enterShip with the ability to accept an object
-  3. Build the method missionStatement
+  2. Build the method enterShip with the ability to accept an object [ship]
+  3. Build the method missionStatement -> doesn't req object, since the length is being tested on crew
 
 */
 
@@ -70,6 +70,11 @@ class CrewMember {
     this.job = job;
     this.specialSkill = specialSkill;
     this.ship = null;
+    /*
+    Step 2: add enterShip method to assign ship and push the crew memeber to ship
+    Had to build the method into constructor because terminal would not run
+    code when outside the constructor.
+    */
     this.enterShip = (ship) =>{
       this.ship = ship
       ship.crew.push(this)
@@ -83,6 +88,12 @@ class Ship {
     this.type = type;
     this.ability = ability;
     this.crew = [];
+    /*
+    Step 3: create the missionStatement method to check the crew length and return ability
+      if there is a crew member on deck, else can't perform a mission yet is returned
+    Had to build the method into constructor because terminal would not run
+    code when outside the constructor.
+    */
     this.missionStatement = () =>{
       return this.crew.length === 0 ? `Can't perform a mission yet.` : this.ability
     }
