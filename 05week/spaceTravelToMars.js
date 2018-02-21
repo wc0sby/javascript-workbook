@@ -73,12 +73,13 @@ class CrewMember {
     /*
     Step 2: add enterShip method to assign ship and push the crew memeber to ship
     Had to build the method into constructor because terminal would not run
-    code when outside the constructor.
+    code when outside the constructor. 
+    ***FIXED IT...does not like ES6 Fat Arrows
     */
-    this.enterShip = (ship) =>{
+  }
+    enterShip(ship){
       this.ship = ship
       ship.crew.push(this)
-    }
   }
 }
 
@@ -93,10 +94,11 @@ class Ship {
       if there is a crew member on deck, else can't perform a mission yet is returned
     Had to build the method into constructor because terminal would not run
     code when outside the constructor.
+     ***FIXED IT...does not like ES6 Fat Arrows
     */
-    this.missionStatement = () =>{
+  }
+    missionStatement(){
       return this.crew.length === 0 ? `Can't perform a mission yet.` : this.ability
-    }
   }
 }
 
