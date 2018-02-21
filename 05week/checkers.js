@@ -8,11 +8,14 @@ const rl = readline.createInterface({
 });
 
 
-function Checker() {
-  // Your code here
+class Checker {
+  constructor(){
+  this.symbol = 'B'
+  }
 }
 
-function Board() {
+class Board {
+  constructor(){
   this.grid = [];
   // creates an 8x8 array, filled with null values
   this.createGrid = function() {
@@ -21,7 +24,7 @@ function Board() {
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
-        this.grid[row].push(null);
+        this.grid[row].push(checker);
       }
     }
   };
@@ -51,17 +54,19 @@ function Board() {
     }
     console.log(string);
   };
+}
 
   // Your code here
 }
-function Game() {
+class Game {
+  constructor(){
+    this.board = new Board();
 
-  this.board = new Board();
-
-  this.start = function() {
-    this.board.createGrid();
-    // Your code here
-  };
+    this.start = function() {
+      this.board.createGrid();
+      // Your code here
+    };
+  }
 }
 
 function getPrompt() {
