@@ -7,37 +7,75 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-
 class Checker {
-  constructor(){
-  this.symbol = 'B'
+  constructor(peice){
+    this.peice = peice
+  }
+  getCheckerPiece(){
+     //need a function here to get the peice location
   }
 }
 
+const black = new Checker('B')
+const red = new Checker('R')
+
 class Board {
   constructor(){
-  this.grid = [];
-  // creates an 8x8 array, filled with null values
-  this.createGrid = function() {
+    this.grid = [];
+    this.checker = [];
+    // creates an 8x8 array, filled with null values
+  }
+
+  getCheckerStartingPositions(row, col){
+    //THIS SUCKS...
+    //patterin is within this by looking at even and odds...come back to this
+    const blackStartPositions = [
+      [7,1],[7,3],[7,5],
+      [7,7],[6,0],[6,2],
+      [6,4],[6,6],[5,1],
+      [5,3],[5,5],[5,7]
+    ]
+    const redStartPositions = [
+      [0,0],[0,2],[0,4],
+      [0,6],[1,1],[1,3],
+      [1,5],[1,7],[2,0],
+      [2,2],[2,4],[2,6]
+    ]
+
+    const newArr1 = []
+
+
+blackStartPositions.forEach((pos)=>{
+  return pos.join(' ') === row, col ? this.checker.push('B') : ''
+})
+
+// console.log(row, col)
+
+  }
+
+  createGrid() {
     // loop to create the 8 rows
+
+    //**This should allow have a function to loop even/odds */
     for (let row = 0; row < 8; row++) {
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
-        this.grid[row].push(checker);
+        this.grid[row].push(this.getCheckerStartingPositions(row, column));   
       }
     }
   };
+  
 
   // prints out the board
-  this.viewGrid = function() {
+  viewGrid() {
     // add our column numbers
     let string = "  0 1 2 3 4 5 6 7\n";
     for (let row = 0; row < 8; row++) {
       // we start with our row number in our array
-      const rowOfCheckers = [row];
+      const rowOfCheckers = [row]; 
       // a loop within a loop
-      for (let column = 0; column < 8; column++) {
+      for (let column = 0; column < 8; column++) {        
         // if the location is "truthy" (contains a checker piece, in this case)
         if (this.grid[row][column]) {
           // push the symbol of the check in that location into the array
@@ -54,22 +92,20 @@ class Board {
     }
     console.log(string);
   };
-}
 
   // Your code here
 }
 class Game {
   constructor(){
     this.board = new Board();
-
-    this.start = function() {
+  }
+    start(){
       this.board.createGrid();
       // Your code here
     };
-  }
 }
 
-function getPrompt() {
+const getPrompt = () => {
   game.board.viewGrid();
   rl.question('which piece?: ', (whichPiece) => {
     rl.question('to where?: ', (toWhere) => {
