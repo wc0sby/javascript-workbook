@@ -9,7 +9,7 @@ const rl = readline.createInterface({
 
 class Checker {
   constructor(peice){
-    return this.symbol = 'black' ? 'B' : 'R'
+    this.symbol = peice === 'black' ? 'B' : 'R'
      //need a function here to get the peice location
   }
 }
@@ -17,34 +17,82 @@ class Checker {
 class Board {
   constructor(){
     this.grid = [];
-    this.checkers = [];
+    // this.checkers = [];
     // creates an 8x8 array, filled with null values
   }
 
-  getCheckerStartingPositions(row, col){
-    //THIS SUCKS...
-    //patterin is within this by looking at even and odds...come back to this
-    const blackStartPositions = [
-      [7,1],[7,3],[7,5],
-      [7,7],[6,0],[6,2],
-      [6,4],[6,6],[5,1],
-      [5,3],[5,5],[5,7]
-    ]
-    const redStartPositions = [
-      [0,0],[0,2],[0,4],
-      [0,6],[1,1],[1,3],
-      [1,5],[1,7],[2,0],
-      [2,2],[2,4],[2,6]
-    ]
+  getCheckerStartingPositions(){
 
-    const blackChecker = new Checker('black')
-    blackStartPositions.forEach((position,i)=>{
-      let blackRow = blackStartPositions[i][0]
-      let blackCol = blackStartPositions[i][1]
-      this.checkers.push(blackChecker)
-      this.grid[blackRow][blackCol] = blackChecker
-      // console.log(position)
+    // const redChecker = new Checker('red')
+    // const blackChecker = new Checker('black')
+    //This array is used to hold the number of columns on the board
+    const boardColArr = [0, 1, 2, 3, 4, 5, 6, 7]
+    
+    //Function to test for even values
+    const isEven = (num) => {
+      return num % 2 === 0
+    }
+   //Function that returns the beginning location of the game of checkers
+    const getPair = (arr, callback) =>{
+      const checker = {
+        black: {
+          position: arr.filter((num)=>{
+          return num < 3 
+          }),
+          piece: new Checker('black')
+        },
+        red: {
+          position: arr.filter((num)=>{
+          return num > 4
+          }),
+          piece: new Checker('red')
+        }
+      }
+      // const blackArr = arr.filter((num)=>{
+      //   return num < 3 
+      // })
+      // const redArr = arr.filter((num)=>{
+      //   return num > 4
+      // })
+    //Loop through filtered array
+    Object.keys(checker).forEach((color)=>{
+      checker[color]['position'].forEach((row)=>{
+        arr.forEach((col)=>{
+          callback(col) && callback(row) || !callback(row)&&!callback(col)
+          ? this.grid[row][col] = checker[color]['piece']
+          : ''
+        })
+      })
     })
+  }
+
+
+      // filterArr.forEach((rowNum)=>{
+      // //Test if each row number is even or odd
+      //   callback(rowNum)
+      //     ?arr.forEach((num)=>{
+      //       if(callback(num)){
+      //         this.grid[rowNum][num] = redChecker
+      //       }
+      //     })
+      //     :arr.forEach((num)=>{
+      //       if(!callback(num)){
+      //         this.grid[rowNum][num] = blackChecker
+      //       }
+      //     })
+      // })
+    
+    
+    getPair(boardColArr,isEven)
+    // blackStartPositions.forEach((position,i)=>{
+    //   let blackLoc = position
+    //   let blackRow = blackStartPositions[i][0]
+    //   let blackCol = blackStartPositions[i][1]
+    //   console.log(blackLoc)
+    //   this.checkers.push(blackChecker)
+    //   this.grid[blackRow][blackCol] = blackChecker
+      // console.log(position)
+    // })
 // console.log(this.grid)
 // console.log(row, col)
 
@@ -52,8 +100,6 @@ class Board {
 
   createGrid() {
     // loop to create the 8 rows
-
-    //**This should allow have a function to loop even/odds */
     for (let row = 0; row < 8; row++) {
       this.grid[row] = [];
       // push in 8 columns of nulls
