@@ -9,20 +9,15 @@ const rl = readline.createInterface({
 
 class Checker {
   constructor(peice){
-    this.peice = peice
-  }
-  getCheckerPiece(){
+    return this.symbol = 'black' ? 'B' : 'R'
      //need a function here to get the peice location
   }
 }
 
-const black = new Checker('B')
-const red = new Checker('R')
-
 class Board {
   constructor(){
     this.grid = [];
-    this.checker = [];
+    this.checkers = [];
     // creates an 8x8 array, filled with null values
   }
 
@@ -42,13 +37,15 @@ class Board {
       [2,2],[2,4],[2,6]
     ]
 
-    const newArr1 = []
-
-
-blackStartPositions.forEach((pos)=>{
-  return pos.join(' ') === row, col ? this.checker.push('B') : ''
-})
-
+    const blackChecker = new Checker('black')
+    blackStartPositions.forEach((position,i)=>{
+      let blackRow = blackStartPositions[i][0]
+      let blackCol = blackStartPositions[i][1]
+      this.checkers.push(blackChecker)
+      this.grid[blackRow][blackCol] = blackChecker
+      // console.log(position)
+    })
+// console.log(this.grid)
 // console.log(row, col)
 
   }
@@ -61,7 +58,7 @@ blackStartPositions.forEach((pos)=>{
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
-        this.grid[row].push(this.getCheckerStartingPositions(row, column));   
+        this.grid[row].push(this.grid.symbol);   
       }
     }
   };
@@ -101,6 +98,7 @@ class Game {
   }
     start(){
       this.board.createGrid();
+      this.board.getCheckerStartingPositions();
       // Your code here
     };
 }
