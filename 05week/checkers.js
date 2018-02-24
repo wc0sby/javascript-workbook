@@ -22,80 +22,49 @@ class Board {
   }
 
   getCheckerStartingPositions(){
-
-    // const redChecker = new Checker('red')
-    // const blackChecker = new Checker('black')
-    //This array is used to hold the number of columns on the board
+    //This array is used to hold the number of row/columns on the board
     const boardColArr = [0, 1, 2, 3, 4, 5, 6, 7]
     
-    //Function to test for even values
+    //Function to test for even values (to be used as callback)
     const isEven = (num) => {
       return num % 2 === 0
     }
-   //Function that returns the beginning location of the game of checkers
-    const getPair = (arr, callback) =>{
-      const checker = {
-        black: {
-          position: arr.filter((num)=>{
-          return num < 3 
-          }),
-          piece: new Checker('black')
-        },
-        red: {
-          position: arr.filter((num)=>{
-          return num > 4
-          }),
-          piece: new Checker('red')
-        }
+    ß//creates an object to define each checker (position and piece) for each color
+    const checker = {
+      black: {
+        position: arr.filter((num)=>{
+        return num < 3 
+        }),
+        piece: new Checker('black')
+      },
+      red: {
+        position: arr.filter((num)=>{
+        return num > 4
+        }),
+        piece: new Checker('red')
       }
-      // const blackArr = arr.filter((num)=>{
-      //   return num < 3 
-      // })
-      // const redArr = arr.filter((num)=>{
-      //   return num > 4
-      // })
-    //Loop through filtered array
+    }
+   //Function that returns the beginning location of the game of checkers, accepts 
+   //array and callback functions above
+    const getPair = (arr, callback) =>{
+    /*Below uses the checker object keys to cycle colors, once the color key is obtained,
+    it gets the position of the color, which is the filtered array.  It then cycles the 
+    the column/row within the filter array to join the even col to even row and odd col to 
+    odd row. If true, assign the checker object piece of the currrent color to the grid,
+    else return an empty string
+    */
     Object.keys(checker).forEach((color)=>{
       checker[color]['position'].forEach((row)=>{
         arr.forEach((col)=>{
           callback(col) && callback(row) || !callback(row)&&!callback(col)
           ? this.grid[row][col] = checker[color]['piece']
           : ''
+          })
         })
       })
-    })
-  }
-
-
-      // filterArr.forEach((rowNum)=>{
-      // //Test if each row number is even or odd
-      //   callback(rowNum)
-      //     ?arr.forEach((num)=>{
-      //       if(callback(num)){
-      //         this.grid[rowNum][num] = redChecker
-      //       }
-      //     })
-      //     :arr.forEach((num)=>{
-      //       if(!callback(num)){
-      //         this.grid[rowNum][num] = blackChecker
-      //       }
-      //     })
-      // })
-    
+    }
     
     getPair(boardColArr,isEven)
-    // blackStartPositions.forEach((position,i)=>{
-    //   let blackLoc = position
-    //   let blackRow = blackStartPositions[i][0]
-    //   let blackCol = blackStartPositions[i][1]
-    //   console.log(blackLoc)
-    //   this.checkers.push(blackChecker)
-    //   this.grid[blackRow][blackCol] = blackChecker
-      // console.log(position)
-    // })
-// console.log(this.grid)
-// console.log(row, col)
-
   }
 
   createGrid() {
@@ -108,7 +77,6 @@ class Board {
       }
     }
   };
-  
 
   // prints out the board
   viewGrid() {
