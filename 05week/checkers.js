@@ -13,42 +13,40 @@ class Checker {
      //need a function here to get the peice location
   }
 }
-
 class Board {
   constructor(){
     this.grid = [];
-    // this.checkers = [];
+    this.checkers = []
     // creates an 8x8 array, filled with null values
   }
 
-  getCheckerStartingPositions(){
+  checkerStart(){
     //This array is used to hold the number of row/columns on the board
-    const boardColArr = [0, 1, 2, 3, 4, 5, 6, 7]
-    
-    //Function to test for even values (to be used as callback)
-    const isEven = (num) => {
-      return num % 2 === 0
-    }
-    ß//creates an object to define each checker (position and piece) for each color
+    const boardRowColArr = [0, 1, 2, 3, 4, 5, 6, 7]
+    //creates an object to define each checker (position and piece) for each color
     const checker = {
       black: {
-        position: arr.filter((num)=>{
+        position: boardRowColArr.filter((num)=>{
         return num < 3 
         }),
         piece: new Checker('black')
       },
       red: {
-        position: arr.filter((num)=>{
+        position: boardRowColArr.filter((num)=>{
         return num > 4
         }),
         piece: new Checker('red')
       }
     }
-   //Function that returns the beginning location of the game of checkers, accepts 
-   //array and callback functions above
+    //Function to test for even values (to be used as callback)
+    const isEven = (num) => {
+      return num % 2 === 0
+    }
+    //Function that returns the beginning location of the game of checkers, accepts 
+    //array and callback functions above
     const getPair = (arr, callback) =>{
-    /*Below uses the checker object keys to cycle colors, once the color key is obtained,
-    it gets the position of the color, which is the filtered array.  It then cycles the 
+      /*uses the checker object keys to cycle colors, once the color key is obtained,
+      it gets the position of the color, which is the filtered array.  It then cycles the 
     the column/row within the filter array to join the even col to even row and odd col to 
     odd row. If true, assign the checker object piece of the currrent color to the grid,
     else return an empty string
@@ -56,15 +54,16 @@ class Board {
     Object.keys(checker).forEach((color)=>{
       checker[color]['position'].forEach((row)=>{
         arr.forEach((col)=>{
-          callback(col) && callback(row) || !callback(row)&&!callback(col)
-          ? this.grid[row][col] = checker[color]['piece']
+          callback(col) && !callback(row) || callback(row) && !callback(col)
+          ? (this.grid[row][col] = checker[color]['piece'],
+            this.checkers.push(checker[color]['piece']))
           : ''
           })
         })
       })
     }
     
-    getPair(boardColArr,isEven)
+    getPair(boardRowColArr,isEven)
   }
 
   createGrid() {
@@ -73,11 +72,11 @@ class Board {
       this.grid[row] = [];
       // push in 8 columns of nulls
       for (let column = 0; column < 8; column++) {
-        this.grid[row].push(this.grid.symbol);   
+        this.grid[row].push(this.grid.symbol); 
       }
     }
   };
-
+  
   // prints out the board
   viewGrid() {
     // add our column numbers
@@ -112,9 +111,24 @@ class Game {
   }
     start(){
       this.board.createGrid();
-      this.board.getCheckerStartingPositions();
+      this.board.checkerStart();
       // Your code here
     };
+    isLegal(inputs){
+      inputs.every((item)=>{
+        // console.log(typeof Number(item))
+        return Number(item) > -1 && Number(item) < 8
+      })
+    }
+
+    moveChecker(start, end){
+      const startPos = start.split('')
+      const endPos = end.split('')
+      this.isLegal(startPos) ? console.log('hey') : console.log('nope')
+
+      this.board.grid[endPos[0]][endPos[1]] = this.board.grid[startPos[0]][startPos[1]]
+      this.board.grid[startPos[0]][startPos[1]] = null
+    }
 }
 
 const getPrompt = () => {
