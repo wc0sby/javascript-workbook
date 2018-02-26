@@ -137,9 +137,29 @@ class Game {
       return player.progression===Math.sign(endPos[0]-startPos[0])
     }
 
+    const takeStandardMove = () =>{
+      !this.board.grid[endPos[0]][endPos[1]]
+      ? (this.board.grid[endPos[0]][endPos[1]] = this.board.grid[startPos[0]][startPos[1]],
+        this.board.grid[startPos[0]][startPos[1]] = null)
+      : console.log(`There's a piece already here`)
+    }
+
+    const takeJump = () =>{
+      const jumpArr = []
+      takeStandardMove()
+      jumpArr.push(Number(endPos[0])-1)
+      jumpArr.push(Number(endPos[1])+Math.sign(startPos[1]-endPos[1]))
+      console.log(jumpArr, this.board.grid[jumpArr[0]][jumpArr[1]] )
+      this.board.grid[jumpArr[0]][jumpArr[1]] = null
+      this.board.checkers.pop()
+    }
+
+
     const proceedWithMove = () =>{
-      this.board.grid[endPos[0]][endPos[1]] = this.board.grid[startPos[0]][startPos[1]]
-      this.board.grid[startPos[0]][startPos[1]] = null
+      Math.abs(Number(startPos[0])-(Number(endPos[0]))) > 1 &&
+      Math.abs(Number(startPos[1])-(Number(endPos[1]))) > 1
+      ? takeJump()
+      : takeStandardMove()
     }
     
     isInputLegal(forInputs) && isCorrectDirection(this.playerTurn) 
