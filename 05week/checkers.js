@@ -7,6 +7,8 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+const boardRowColArr = [0, 1, 2, 3, 4, 5, 6, 7]
+
 class Checker {
   constructor(peice){
     this.symbol = peice === 'black' ? 'B' : 'R'
@@ -18,26 +20,29 @@ class Board {
     this.grid = [];
     this.checkers = []
     // creates an 8x8 array, filled with null values
+    this.checker = {
+      player1: {
+        position: boardRowColArr.filter((num)=>{
+        return num < 3 
+        }),
+        piece: new Checker('black'),
+        color: 'Black',
+        progression: 1
+      },
+      player2: {
+        position: boardRowColArr.filter((num)=>{
+        return num > 4
+        }),
+        piece: new Checker('red'),
+        color: 'Red',
+        progression: -1
+      }
+    }
   }
 
   checkerStart(){
     //This array is used to hold the number of row/columns on the board
-    const boardRowColArr = [0, 1, 2, 3, 4, 5, 6, 7]
     //creates an object to define each checker (position and piece) for each color
-    const checker = {
-      black: {
-        position: boardRowColArr.filter((num)=>{
-        return num < 3 
-        }),
-        piece: new Checker('black')
-      },
-      red: {
-        position: boardRowColArr.filter((num)=>{
-        return num > 4
-        }),
-        piece: new Checker('red')
-      }
-    }
     //Function to test for even values (to be used as callback)
     const isEven = (num) => {
       return num % 2 === 0
@@ -51,12 +56,12 @@ class Board {
     odd row. If true, assign the checker object piece of the currrent color to the grid,
     else return an empty string
     */
-    Object.keys(checker).forEach((color)=>{
-      checker[color]['position'].forEach((row)=>{
+    Object.keys(this.checker).forEach((color)=>{
+      this.checker[color]['position'].forEach((row)=>{
         arr.forEach((col)=>{
-          callback(col) && !callback(row) || callback(row) && !callback(col)
-          ? (this.grid[row][col] = checker[color]['piece'],
-            this.checkers.push(checker[color]['piece']))
+          !callback(row) && callback(col) || callback(row) && !callback(col)
+          ? (this.grid[row][col] = this.checker[color]['piece'],
+            this.checkers.push(this.checker[color]['piece']))
           : ''
           })
         })
@@ -108,31 +113,47 @@ class Board {
 class Game {
   constructor(){
     this.board = new Board();
+    this.legalFlag = null;
+    this.playerTurn = this.board.checker.player2
   }
-    start(){
-      this.board.createGrid();
-      this.board.checkerStart();
-      // Your code here
-    };
-    isLegal(inputs){
-      inputs.every((item)=>{
-        // console.log(typeof Number(item))
-        return Number(item) > -1 && Number(item) < 8
+  start(){
+    this.board.createGrid();
+    this.board.checkerStart();
+    // Your code here
+  }
+  
+  moveChecker(start, end){
+    const forInputs = (start+end).split('')
+    const startPos = start.split('')
+    const endPos = end.split('')
+
+    const isInputLegal = (inputsArr) =>{
+      return inputsArr.every((inputNum) => {
+        return Number(inputNum) > -1 && Number(inputNum) < 8
       })
     }
 
-    moveChecker(start, end){
-      const startPos = start.split('')
-      const endPos = end.split('')
-      this.isLegal(startPos) ? console.log('hey') : console.log('nope')
+    const isCorrectDirection = (player) =>{
+      return player.progression===Math.sign(endPos[0]-startPos[0])
+    }
 
+    const proceedWithMove = () =>{
       this.board.grid[endPos[0]][endPos[1]] = this.board.grid[startPos[0]][startPos[1]]
       this.board.grid[startPos[0]][startPos[1]] = null
     }
+    
+    isInputLegal(forInputs) && isCorrectDirection(this.playerTurn) 
+    ? (proceedWithMove(), 
+      this.playerTurn === game.board.checker.player2
+      ? this.playerTurn = game.board.checker.player1
+      : this.playerTurn = game.board.checker.player2)
+    : console.log('Invalid Input')
+  }
 }
 
 const getPrompt = () => {
   game.board.viewGrid();
+  console.log(`${game.playerTurn.color}'s Move...`)
   rl.question('which piece?: ', (whichPiece) => {
     rl.question('to where?: ', (toWhere) => {
       game.moveChecker(whichPiece, toWhere);
