@@ -62,10 +62,10 @@ class Board {
     /*This creates an object to define the attributes of the checker property.  
     Each player has it's own position, piece, color, and progression
     */
-   this.checker = {
-     player1: {
-       position: boardRowColArr.filter((num)=>{
-         return num < 3 
+    this.checker = {
+      player1: {
+        position: boardRowColArr.filter((num)=>{
+          return num < 3 
         }),
         piece: new Checker('black'),
         color: 'Black',
@@ -99,13 +99,13 @@ class Board {
       odd row. If true, assign the checker object piece of the currrent color to the grid,
       else return an empty string
       */
-     Object.keys(this.checker).forEach((color)=>{
-       this.checker[color]['position'].forEach((row)=>{
-         arr.forEach((col)=>{
-           !callback(row) && callback(col) || callback(row) && !callback(col)
-           ? (this.grid[row][col] = this.checker[color]['piece'],
-           this.checkers.push(this.checker[color]['piece']))
-           : ''
+      Object.keys(this.checker).forEach((color)=>{
+        this.checker[color]['position'].forEach((row)=>{
+          arr.forEach((col)=>{
+            !callback(row) && callback(col) || callback(row) && !callback(col)
+            ? (this.grid[row][col] = this.checker[color]['piece'],
+            this.checkers.push(this.checker[color]['piece']))
+            : ''
           })
         })
       })
@@ -159,7 +159,7 @@ class Game {
   start(){
     this.board.createGrid();
     this.board.checkerStart();
-    }
+  }
   /*
 The moveChecker class takes in the start and end coordinates from getPrompt.  It checks
 to see if the inputs are valid, if the direction passed is correct for the player, and determines
