@@ -1,25 +1,46 @@
 'use strict';
 
+/*
+Create a forEach() function that takes an array of items and a function that
+ runs the function arr.length number of times.
+
+Create a map() function that takes an array of items and a function that returns
+ an array with each item manipulated by that function.
+
+Create a filter() function that takes an array of items and a function that 
+ returns an array with only the items that return true in the function.
+*/
+
 const assert = require('assert');
 
-function forEach(arr, callback) {
-  // Your code here
+const forEach = (arr, callback) =>{
+  arr.forEach((item)=>{
+    callback(item)
+  })
 }
 
-function map(arr, callback) {
-  // Your code here
+const map = (arr, callback) => {
+  return arr.map((item)=>{
+    return callback(item)
+  })
 }
 
-function filter(arr, callback) {
-  // Your code here
+const filter = (arr, callback) => {
+  return arr.filter((item)=>{
+    return callback(item)
+  })
 }
 
-function some(arr, callback) {
-  // Your code here
+const some = (arr, callback) => {
+  return arr.some((item)=>{
+    return callback(item)
+  })
 }
 
-function every(arr, callback) {
-  // Your code here
+const every = (arr, callback) => {
+  return arr.every((item)=>{
+    return callback(item)
+  })
 }
 
 if (typeof describe === 'function') {
