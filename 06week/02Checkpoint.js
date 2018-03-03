@@ -2,20 +2,20 @@ const strNums = ["1","4","1","5","9","2","6","5","3","5","8","9","7","9","3","2"
 
 // Given 1000 digits of PI as strings, return an array of the digits as numbers
 
-
-const nums = (arr) => {
-    return arr.map((numStr)=>{
-      return( Number(numStr))
-    })
-  }
+//creates new array using the map function to convert from str to num data type
+const nums = strNums.map((numStr)=>{
+    return Number(numStr)
+})
 
 // Find the sum of the even values
-const sumEvens = (arr) => {
-    return arr.filter((num)=>{
-      return( Number(num) % 2 === 0 )
-    })
-  }
-
+//uses filter to create a new array with only even values, then chains to a reduce 
+//function that takes an accumulator and value to sum the values.
+const sumEvens = nums.filter((num)=>{
+    return( (num) % 2 === 0 )
+    }).reduce((acc,crrntVal)=>{
+    return (acc) + (crrntVal)
+  })
+  
 console.log(sumEvens);
 
 // Return an object with counts for each number
@@ -28,6 +28,7 @@ console.log(sumEvens);
 //   9: 0
 // }
 
+//defines the object with key value pairs for all possibilities
 const numCount = {
     0: 0, 
     1: 0,
@@ -40,7 +41,10 @@ const numCount = {
     8: 0,
     9: 0
 };
-
+//function that takes in an obj and array
+//for each object key, the key is passed into a filter method
+//the length of this method is then assigned to the current key
+//loops through all keys
 const countEachNumInArr = (obj, arr) => {
     Object.keys(obj).forEach((key)=>{
       obj[key] = arr.filter((num)=>{
@@ -49,12 +53,19 @@ const countEachNumInArr = (obj, arr) => {
     })
   }
 
-countEachNumInArr(numCount, strNums)
+countEachNumInArr(numCount, nums)
 
 console.log(numCount)
 
 
 // Find the index of the first "Austin" value (the value plus its index equals 512)
-const atxIdx;
+//returns the index where austinNum + index === 512.  When this is truthy, the function
+//returns the index; else ''.  The sum of the index and the value located at the index
+//should sum to 512.
+const atxIdx = nums.findIndex((austinNum, index)=>{
+    return austinNum + index === 512
+    ? index
+    : ''
+  })
 
 console.log(`index: ${atxIdx}, value: ${nums[atxIdx]}`);
