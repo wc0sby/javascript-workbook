@@ -8,11 +8,11 @@ import Board from './Components/Board';
 
 class TicTacToe extends React.Component {
   
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+  }
 
-  // handleButtonPress=()=>{console.log('here')}
+  handleButtonPress=()=>{console.log('here')}
 
   render() {
     return (
