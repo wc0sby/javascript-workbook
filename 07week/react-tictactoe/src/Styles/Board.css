@@ -1,0 +1,10 @@
+.row {
+  height: 150px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+[data-cell]{
+  border: solid 1px grey;
+  flex: 1;
+}

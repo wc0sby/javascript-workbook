@@ -18,9 +18,16 @@
   font-size: 1.5em;
 }
 
-.App-intro {
+.MessageCenter {
   font-size: large;
+  color: rgb(0, 140, 255);
 }
+
+.GameBoard {
+  background: plum;
+  margin: 0 25%
+}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
