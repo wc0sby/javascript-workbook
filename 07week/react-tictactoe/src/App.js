@@ -6,13 +6,32 @@ import Messages from './Components/Messages'
 import Button from './Components/Button'
 import Board from './Components/Board';
 
-class TicTacToe extends React.Component {
+class TicTacToe extends Component {
   
   constructor(props) {
     super(props);
+    this.state = {
+      boardPosition: [ ['o','','o'],
+                       ['','','o'],
+                       ['','o',''] 
+                      ],
+      playerTurn: 'X',
+      clickedSquare: ''
+    }
   }
 
-  handleButtonPress=()=>{console.log('here')}
+  getClickedSquare = (e, props) => {
+    this.setState({clickedSquare: e.target.dataset.row})
+  }
+  
+  getIndex = (e) => {
+    console.log(this.props.loc)
+  }
+
+  gameMove = (loc, player) =>{
+
+  }
+
 
   render() {
     return (
@@ -21,15 +40,25 @@ class TicTacToe extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">TicTacToe</h1>
         </header>
-        <body>
+        <div >
           <section className="MessageCenter">
             <Messages/>
             <Button/>
           </section>
-          <section className="GameBoard">
-            <Board/>
+          <section className="GameBoard" onClick={ this.getClickedSquare }>
+
+          { this.state.boardPosition.map((eachArr, i)=>{
+            return (
+            <Board 
+              key = { i }
+              rowNum = { i }
+              piece = { eachArr[eachArr] }
+              gameMove = { this.gameMove }
+              />
+            )
+          }) }
           </section>
-        </body>
+        </div>
       </div>
     );
   }

@@ -4,7 +4,9 @@
   justify-content: flex-start;
 }
 
-[data-cell]{
-  border: solid 1px grey;
+[data-col]{
+  border: solid 3px grey;
+  background: rgba(0, 0, 255, 0.13);
+  margin: 5px;
   flex: 1;
 }
