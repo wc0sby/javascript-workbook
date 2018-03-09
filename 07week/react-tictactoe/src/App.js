@@ -11,20 +11,24 @@ class TicTacToe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boardPosition: [ ['o','','o'],
-                       ['','','o'],
-                       ['','o',''] 
+      boardPosition: [ ['','',''],
+                       ['','',''],
+                       ['','',''] 
                       ],
       playerTurn: 'X',
-      clickedSquare: ''
+      isThereAWin: false
     }
   }
 
-  getClickedSquare = (e, props) => {
-    this.setState({clickedSquare: e.target.dataset.row})
+  getClickedSquare = (e) => {
+    const newBoardLayout = {...this.state.boardPosition}
+    const position = e.target.dataset.col 
+    const piece = this.state.playerTurn
+      newBoardLayout[position[0]][position[1]]=piece
+      this.setState({ playerTurn: piece === 'X' ? 'O' : 'X' })
   }
   
-  getIndex = (e) => {
+  getIndex = () => {
     console.log(this.props.loc)
   }
 
@@ -42,7 +46,9 @@ class TicTacToe extends Component {
         </header>
         <div >
           <section className="MessageCenter">
-            <Messages/>
+            <Messages
+              winStat = {this.state.isThereAWin}
+              player = {this.state.playerTurn}/>
             <Button/>
           </section>
           <section className="GameBoard" onClick={ this.getClickedSquare }>
@@ -52,7 +58,7 @@ class TicTacToe extends Component {
             <Board 
               key = { i }
               rowNum = { i }
-              piece = { eachArr[eachArr] }
+              piece = { this.state.boardPosition[i]}
               gameMove = { this.gameMove }
               />
             )
