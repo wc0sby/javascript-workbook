@@ -8,5 +8,13 @@
   border: solid 3px grey;
   background: rgba(0, 0, 255, 0.13);
   margin: 5px;
+  outline: none;
   flex: 1;
+  color: white;
+}
+
+p {
+  box-sizing: border-box;
+  font-size: 60px;
+  margin: 25% ;
 }
