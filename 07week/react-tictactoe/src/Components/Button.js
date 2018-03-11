@@ -6,10 +6,11 @@ export default class Button extends Component {
 
         const bttnStyle = {
             width: '175px',
-            height: '25px',
+            height: '35px',
             color: 'white',
-            background: 'blue',
-            fontSize: '15px'
+            background: 'rgba(171, 7, 247, 0.288)',
+            fontSize: '20px', 
+            borderColor: 'white',
         }
 
         const renderButton = () => {

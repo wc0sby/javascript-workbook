@@ -5,7 +5,8 @@ export default class Messages extends Component{
 
     render(){
        const msgStyles = {
-           margin: '0'
+           color: 'White',
+           textShadow: 'purple -3px 2px 15px, purple 3px -2px 15px'
        }
 
        const msgDecider = () =>{

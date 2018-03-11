@@ -2,36 +2,29 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
   background-color: #222;
   height: 150px;
   padding: 20px;
-  color: white;
+  color: rgb(154, 113, 230);
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2.5em;
+  margin: 0;
+  Text-Shadow: white -1px 0px 1px, white 1px -1px 1px;
 }
 
 .MessageCenter {
   font-size: large;
   color: rgb(0, 140, 255);
+  height: 100px;
 }
 
 .GameBoard {
   background: plum;
   position: relative;
-  margin: 5px 25%;
+  margin: 5% 25%;
+  border: black solid 2px;
   /* margin-top: 10px; */
-}
-
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

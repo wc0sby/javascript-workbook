@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './TicTacToe.css';
 
 import Messages from './Components/Messages'
@@ -29,7 +28,7 @@ class TicTacToe extends Component {
 
     if (!this.state.isThereAWin){
 
-      if (this.checkForEmptySpace(newBoardLayout, position)){
+      if (position && this.checkForEmptySpace(newBoardLayout, position)){
         newBoardLayout[position[0]][position[1]]=piece
 
         this.checkForWin(newBoardLayout, position, piece)
@@ -100,10 +99,7 @@ class TicTacToe extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">TicTacToe</h1>
-        </header>
-        <div>
           <section className="MessageCenter">
             <Messages
               winStat = {this.state.isThereAWin}
@@ -116,20 +112,21 @@ class TicTacToe extends Component {
               action = {this.handleButtonPressed}
             />
           </section>
-          <section className="GameBoard" >
-
-          {this.state.boardPosition.map((eachArr, i)=>{
-            return (
-              <Board 
-                key = { i }
-                rowNum = { i }
-                piece = { this.state.boardPosition[i]}
-                move = { this.getClickedSquare}
-              />  
-            )
-          })}
-          </section>
-        </div>
+        </header>
+          <div>
+            <section className="GameBoard" >
+              {this.state.boardPosition.map((eachArr, i)=>{
+                return (
+                  <Board 
+                    key = { i }
+                    rowNum = { i }
+                    piece = { this.state.boardPosition[i]}
+                    move = { this.getClickedSquare}
+                  />  
+                )
+              })}
+            </section>
+          </div>
       </div>
     );
   }
