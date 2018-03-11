@@ -3,19 +3,25 @@ import '../Styles/Board.css'
 
 export default class Board extends Component{
 
-
+/*
+The rendor method below returns a row with 3 columns
+each column is assigned an onClick through a passed prop from the parent component
+and assigns each data column with the rowid plus it's column id.  This is used to know
+what square is clicked in the handleTicTacToe method
+*/
     render() {
+        const renderSquare = (colID) =>{
+            return (
+                <div data-col={this.props.rowNum + colID.toString()} onClick={this.props.move}>
+                    <p>{this.props.piece[colID]}</p>
+                </div>
+            )
+        }
         return(
             <div className="row" data-row={this.props.rowNum}>
-                <div data-col={this.props.rowNum + "0"} onClick={this.props.move}>
-                    <p>{this.props.piece[0]}</p>
-                </div>
-                <div data-col={this.props.rowNum + "1"} onClick={this.props.move}>
-                    <p>{this.props.piece[1]}</p>
-                </div>
-                <div data-col={this.props.rowNum + "2"} onClick={this.props.move}>
-                    <p>{this.props.piece[2]}</p>
-                </div>
+                {renderSquare(0)}
+                {renderSquare(1)}
+                {renderSquare(2)}
             </div>
         )
     }
