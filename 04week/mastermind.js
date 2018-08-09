@@ -11,34 +11,71 @@ let board = [];
 let solution = '';
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-function printBoard() {
+const printBoard=()=> {
   for (let i = 0; i < board.length; i++) {
     console.log(board[i]);
   }
 }
 
-function generateSolution() {
+const generateSolution=()=> {
   for (let i = 0; i < 4; i++) {
     const randomIndex = getRandomInt(0, letters.length);
     solution += letters[randomIndex];
   }
 }
 
-function getRandomInt(min, max) {
+const getRandomInt=(min, max)=> {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function generateHint() {
-  // your code here
+const generateHint=(solution, guess)=> {
+  const solutionArray = solution.split('')
+  const guessArray = guess.split('')
+  let correctLetterLocation = 0
+  let correctLetters = 0
+  let hint = ''
+
+  // for(let i = 0; i < solutionArray.length; i++){
+  //   if (solutionArray[i] === guessArray[i]){
+  //     correctLetterLocation += 1
+  //     solutionArray[i] = null
+  //   }
+  // }
+
+  solutionArray.forEach((letter, i)=>{
+    if(letter === guessArray[i]){
+      correctLetterLocation += 1
+      letter = null
+    }
+  })
+  
+  // for(let x = 0; x < solutionArray.length; x++){
+  //   if(solutionArray.indexOf(guessArray[x]) > -1){
+  //     correctLetters += 1
+  //   }
+  // }
+
+  solutionArray.forEach((letter, i)=>{
+    if(solutionArray.indexOf(guessArray[i]) > -1){
+      correctLetters += 1
+    }
+  })
+
+  board.push(guess)
+  console.log( `${correctLetterLocation}-hfhjgkfgfh${correctLetters}` )
+
 }
 
-function mastermind(guess) {
-  solution = 'abcd'; // Comment this out to generate a random solution
-  // your code here
+const mastermind=(guess)=> {
+  // solution = 'abcd'; // Comment this out to generate a random solution
+  board.length === 10 && solution !== guess 
+  ? console.log(`You ran out of turns! The solution was ${solution}`) 
+  : generateHint(solution, guess)
+  
 }
 
 
-function getPrompt() {
+const getPrompt=()=> {
   rl.question('guess: ', (guess) => {
     mastermind(guess);
     printBoard();
